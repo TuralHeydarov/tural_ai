@@ -2,15 +2,15 @@
 
 import { useState, useRef, KeyboardEvent } from "react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Paperclip, Send, X } from "lucide-react"
+import { Paperclip, Send, X, Loader2 } from "lucide-react"
 import { AddContextModal } from "@/components/add-context-modal"
 
 interface MessageInputProps {
   onSend: (content: string, files?: File[], context?: Array<{ type: string; name: string }>) => void
+  disabled?: boolean
 }
 
-export function MessageInput({ onSend }: MessageInputProps) {
+export function MessageInput({ onSend, disabled = false }: MessageInputProps) {
   const [message, setMessage] = useState("")
   const [files, setFiles] = useState<File[]>([])
   const [context, setContext] = useState<Array<{ type: string; name: string }>>([])
@@ -19,7 +19,7 @@ export function MessageInput({ onSend }: MessageInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleSend = () => {
-    if (message.trim() || files.length > 0) {
+    if ((message.trim() || files.length > 0) && !disabled) {
       onSend(message, files, context.length > 0 ? context : undefined)
       setMessage("")
       setFiles([])
@@ -111,8 +111,9 @@ export function MessageInput({ onSend }: MessageInputProps) {
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask anything... (type @ to add context)"
-            className="w-full resize-none border-0 bg-transparent px-4 py-3 text-sm focus:outline-none focus:ring-0"
+            className="w-full resize-none border-0 bg-transparent px-4 py-3 text-sm focus:outline-none focus:ring-0 disabled:opacity-50"
             rows={3}
+            disabled={disabled}
           />
         </div>
 
@@ -121,6 +122,7 @@ export function MessageInput({ onSend }: MessageInputProps) {
             variant="outline"
             size="icon"
             onClick={() => fileInputRef.current?.click()}
+            disabled={disabled}
           >
             <Paperclip className="h-4 w-4" />
           </Button>
@@ -128,11 +130,19 @@ export function MessageInput({ onSend }: MessageInputProps) {
             variant="outline"
             size="icon"
             onClick={() => setShowContextModal(true)}
+            disabled={disabled}
           >
             <span className="text-lg">@</span>
           </Button>
-          <Button onClick={handleSend} disabled={!message.trim() && files.length === 0}>
-            <Send className="h-4 w-4" />
+          <Button 
+            onClick={handleSend} 
+            disabled={disabled || (!message.trim() && files.length === 0)}
+          >
+            {disabled ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Send className="h-4 w-4" />
+            )}
           </Button>
         </div>
 

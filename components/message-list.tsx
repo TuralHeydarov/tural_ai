@@ -2,13 +2,14 @@
 
 import { type Message } from "@/app/chat/page"
 import { cn } from "@/lib/utils"
-import { Bot, User } from "lucide-react"
+import { Bot, User, Loader2 } from "lucide-react"
 
 interface MessageListProps {
   messages: Message[]
+  isLoading?: boolean
 }
 
-export function MessageList({ messages }: MessageListProps) {
+export function MessageList({ messages, isLoading }: MessageListProps) {
   if (messages.length === 0) {
     return (
       <div className="flex h-full items-center justify-center">
@@ -63,10 +64,19 @@ export function MessageList({ messages }: MessageListProps) {
                 ))}
               </div>
             )}
-            <p className="whitespace-pre-wrap">{message.content}</p>
-            <p className="mt-1 text-xs opacity-70">
-              {message.timestamp.toLocaleTimeString()}
-            </p>
+            {message.content ? (
+              <p className="whitespace-pre-wrap">{message.content}</p>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span className="text-sm opacity-70">Thinking...</span>
+              </div>
+            )}
+            {message.content && (
+              <p className="mt-1 text-xs opacity-70">
+                {message.timestamp.toLocaleTimeString()}
+              </p>
+            )}
           </div>
 
           {message.role === "user" && (
