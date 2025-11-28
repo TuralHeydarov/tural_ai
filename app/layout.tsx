@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Sidebar } from "@/components/sidebar";
+import Sidebar from "@/components/sidebar";
 
 export const metadata: Metadata = {
   title: "Tural.AI",
@@ -14,9 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex h-screen overflow-hidden bg-white dark:bg-gray-900">
+      <body className="bg-gray-900">
         <Sidebar />
-        <main className="flex-1 overflow-auto">
+        <main className="ml-64 min-h-screen transition-all duration-300">
           {children}
         </main>
       </body>
