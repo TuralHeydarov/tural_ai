@@ -1,19 +1,19 @@
+import { Chat } from '@/components/chat';
+
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <h1 className="text-6xl font-bold text-center sm:text-left bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+    <div className="h-screen flex flex-col bg-white dark:bg-gray-900">
+      {/* Header */}
+      <header className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+        <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Tural.AI
         </h1>
-        <p className="text-xl text-center sm:text-left text-gray-600 dark:text-gray-400">
-          AI-powered platform for the future
-        </p>
+      </header>
+
+      {/* Chat */}
+      <main className="flex-1 overflow-hidden">
+        <Chat />
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <p className="text-sm text-gray-500">
-          Built with Next.js 14 + TypeScript + Tailwind CSS
-        </p>
-      </footer>
     </div>
   );
 }
