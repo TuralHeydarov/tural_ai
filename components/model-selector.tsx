@@ -5,7 +5,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -36,7 +35,7 @@ export function ModelSelector({ value, onChange }: ModelSelectorProps) {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Anthropic</SelectLabel>
+          <span>Anthropic</span>
           {anthropicModels.map((model) => (
             <SelectItem key={model.value} value={model.value}>
               {model.label}
@@ -44,7 +43,7 @@ export function ModelSelector({ value, onChange }: ModelSelectorProps) {
           ))}
         </SelectGroup>
         <SelectGroup>
-          <SelectLabel>OpenAI</SelectLabel>
+          <span>OpenAI</span>
           {openaiModels.map((model) => (
             <SelectItem key={model.value} value={model.value}>
               {model.label}
